@@ -210,14 +210,7 @@ public class TelephonyProvider extends ContentProvider
 
                 oldVersion = 5 << 16 | 6;
             }
-            if (oldVersion < (6 << 16 | 6)) {
-                // Add protcol fields to the APN. The XML file does not change.
-                db.execSQL("ALTER TABLE " + CARRIERS_TABLE +
-                        " ADD COLUMN protocol TEXT DEFAULT IP;");
-                db.execSQL("ALTER TABLE " + CARRIERS_TABLE +
-                        " ADD COLUMN roaming_protocol TEXT DEFAULT IP;");
-                oldVersion = 6 << 16 | 6;
-            }
+
         }
         /**
          * Gets the next row of data profile values.
@@ -321,12 +314,6 @@ public class TelephonyProvider extends ContentProvider
             // Initialize defaults if any
             if (row.containsKey(Telephony.Carriers.AUTH_TYPE) == false) {
                 row.put(Telephony.Carriers.AUTH_TYPE, -1);
-            }
-            if (row.containsKey(Telephony.Carriers.PROTOCOL) == false) {
-                row.put(Telephony.Carriers.PROTOCOL, "IP");
-            }
-            if (row.containsKey(Telephony.Carriers.ROAMING_PROTOCOL) == false) {
-                row.put(Telephony.Carriers.ROAMING_PROTOCOL, "IP");
             }
             db.insert(CARRIERS_TABLE, null, row);
         }
@@ -463,14 +450,6 @@ public class TelephonyProvider extends ContentProvider
                 if (!values.containsKey(Telephony.Carriers.AUTH_TYPE)) {
                     values.put(Telephony.Carriers.AUTH_TYPE, -1);
                 }
-                if (!values.containsKey(Telephony.Carriers.PROTOCOL)) {
-                    values.put(Telephony.Carriers.PROTOCOL, "IP");
-                }
-                if (!values.containsKey(Telephony.Carriers.ROAMING_PROTOCOL)) {
-                    values.put(Telephony.Carriers.ROAMING_PROTOCOL, "IP");
-                }
-
-
                 long rowID = db.insert(CARRIERS_TABLE, null, values);
                 if (rowID > 0)
                 {
