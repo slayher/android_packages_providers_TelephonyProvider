@@ -315,12 +315,6 @@ public class TelephonyProvider extends ContentProvider
             if (row.containsKey(Telephony.Carriers.AUTH_TYPE) == false) {
                 row.put(Telephony.Carriers.AUTH_TYPE, -1);
             }
-            if (row.containsKey(Telephony.Carriers.PROTOCOL) == false) {
-                row.put(Telephony.Carriers.PROTOCOL, "IP");
-            }
-            if (row.containsKey(Telephony.Carriers.ROAMING_PROTOCOL) == false) {
-                row.put(Telephony.Carriers.ROAMING_PROTOCOL, "IP");
-            }
             db.insert(CARRIERS_TABLE, null, row);
         }
     }
